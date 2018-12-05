@@ -110,7 +110,6 @@ class SohbetActivity : AppCompatActivity() {
         rvSohbetOdalari.adapter = mySohbetOdasiAdapter
         rvSohbetOdalari.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-
     }
 
     fun sohbetOdasiSil(sohbetOdasiİd: String) {
