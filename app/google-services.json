@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1098876103718",
+    "firebase_url": "https://sohbetodam-93916.firebaseio.com",
+    "project_id": "sohbetodam-93916",
+    "storage_bucket": "sohbetodam-93916.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098876103718:android:879c6775269d3ca4",
+        "android_client_info": {
+          "package_name": "com.tosun.ali.sohbetodam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098876103718-83kljdopfrf5mab3h0kgbpsdvqe349h5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSER_TQKepPuDdIvXDaTVl5nV_NxHHkUs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

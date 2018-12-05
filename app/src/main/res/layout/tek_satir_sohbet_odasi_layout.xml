@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlLayoutSohbet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/csLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp">
+
+        <ImageView
+            android:id="@+id/imgSohbetOdasiOlusturanProfilResmi"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
+
+        <TextView
+            android:id="@+id/tvSohbetOdasiOlusturanKisiAdi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"
+            android:text="Kişiii"
+            app:layout_constraintBottom_toBottomOf="@+id/imgSohbetOdasiOlusturanProfilResmi"
+            app:layout_constraintEnd_toStartOf="@+id/imgSohbetOdasiSil"
+            app:layout_constraintStart_toEndOf="@+id/imgSohbetOdasiOlusturanProfilResmi" />
+
+        <TextView
+            android:id="@+id/tvSohbetOdasiAdi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/tvSohbetOdasiOlusturanKisiAdi"
+            app:layout_constraintEnd_toStartOf="@+id/imgSohbetOdasiSil"
+            app:layout_constraintStart_toEndOf="@+id/imgSohbetOdasiOlusturanProfilResmi"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgSohbetOdasiSil"
+            android:layout_width="72dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvSohbetOdasiMesajSayisi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imgSohbetOdasiOlusturanProfilResmi"
+            app:srcCompat="@drawable/ic_delete" />
+
+        <TextView
+            android:id="@+id/tvSohbetOdasiMesajSayisi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/imgSohbetOdasiOlusturanProfilResmi"
+            app:layout_constraintEnd_toEndOf="@+id/imgSohbetOdasiSil"
+            app:layout_constraintStart_toStartOf="@+id/imgSohbetOdasiSil" />
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

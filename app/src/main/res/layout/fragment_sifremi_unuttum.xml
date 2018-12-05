@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.SifremiUnuttumFragment">
+
+
+    <EditText
+        android:id="@+id/etDialogSifremiUnuttumMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnDialogSifremiUnuttumİptal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="İptal"
+        app:layout_constraintStart_toStartOf="@+id/etDialogSifremiUnuttumMail"
+        app:layout_constraintTop_toBottomOf="@+id/etDialogSifremiUnuttumMail" />
+
+    <Button
+        android:id="@+id/btnDialogSifremiUnuttumGonder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="2dp"
+        android:text="Gönder"
+        app:layout_constraintEnd_toEndOf="@+id/etDialogSifremiUnuttumMail"
+        app:layout_constraintTop_toBottomOf="@+id/etDialogSifremiUnuttumMail" />
+</android.support.constraint.ConstraintLayout>
