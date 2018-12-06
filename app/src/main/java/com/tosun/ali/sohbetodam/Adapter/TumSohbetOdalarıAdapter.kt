@@ -69,7 +69,14 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
 
             kullaniciBilgileriniGetir(oAnkiSohbetOdasi!!)
 
+
+
+            //sohbet odasına tıklandığı zaman gerçekleşecek olaylar.
             itemView.setOnClickListener {
+
+                kullaniciyiSohbetOdasinaKaydet(oAnkiSohbetOdasi)
+                //sohbet odasına tıklayan kişinin kullanıcı idsini ve toplam kaç mesaj okuduğunu firebase e kaydeder.
+
 
                 var intent = Intent(itemView.context, SohbetOdasiActivity::class.java)
 
@@ -120,6 +127,20 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
 
         }
 
+        private fun kullaniciyiSohbetOdasinaKaydet(oAnkiSohbetOdasi: SohbetOdasi) {
+
+            var ref = FirebaseDatabase.getInstance().reference
+                    .child("sohbet_odasi")
+                    .child(oAnkiSohbetOdasi.sohbetodasi_id)
+                    .child("sohbet_odasi_kayitli_kisiler")
+                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                    .child("okunan_mesaj_sayisi")
+                    .setValue(oAnkiSohbetOdasi.sohbet_odasi_mesajlari!!.size.toString())
+
+
+
+        }
+
         private fun kullaniciBilgileriniGetir(oAnkiSohbetOdasi: SohbetOdasi) {
             FirebaseDatabase.getInstance().reference
                     .child("kullanici")
@@ -149,8 +170,6 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
                                     Picasso.get().load(profilResim).into(imgSohbetOdasiOlusturanProfilResmi)
                                     tvSohbetOdasiOlusturanKisiAdi.setText(kullaniciAdi)
                                 }
-                                Log.e("saatüc", kullaniciAdi)
-
 
                             }
 

@@ -29,6 +29,8 @@ class SohbetOdasiActivity : AppCompatActivity() {
 
     var myAdapter: TumMesajlarAdapter? = null
 
+    var server_key: String? = null
+
     var mesajIdSet: HashSet<String>? = null
 
     var myThread: Runnable? = null
@@ -41,7 +43,37 @@ class SohbetOdasiActivity : AppCompatActivity() {
 
         sohbetOdasiniOgren()
 
+        serverKeyOgren()
+
         init()
+
+
+    }
+
+
+    private fun serverKeyOgren() {
+        var ref = FirebaseDatabase.getInstance().reference
+                .child("server")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+
+                var singleDataSnapShot = p0.children.iterator().next()
+
+
+
+                server_key = singleDataSnapShot.getValue().toString()
+
+
+            }
+
+
+        })
 
 
     }
@@ -50,7 +82,7 @@ class SohbetOdasiActivity : AppCompatActivity() {
 
         etSohbetMesaj.setOnClickListener {
 
-            recyclerViewSohbetMesajlari.smoothScrollToPosition(myAdapter!!.itemCount -1)
+            recyclerViewSohbetMesajlari.smoothScrollToPosition(myAdapter!!.itemCount - 1)
         }
 
 
@@ -190,8 +222,8 @@ class SohbetOdasiActivity : AppCompatActivity() {
                             Log.e("denemes", kullaniciİd + " kullanici id")
 
                             if (!mesajIdSet!!.contains(mesaj.key)) {
-                                Log.e("sohbetKey",p0.key)
-                                Log.e("sohbetKeys",mesaj.key)
+                                Log.e("sohbetKey", p0.key)
+                                Log.e("sohbetKeys", mesaj.key)
                                 mesajIdSet!!.add(mesaj.key!!)
 
 
@@ -207,7 +239,7 @@ class SohbetOdasiActivity : AppCompatActivity() {
                                     fun bilgileriGetir() {
                                         tumMesajlar?.add(geciciMesaj)
                                         myAdapter?.notifyDataSetChanged()
-                                        recyclerViewSohbetMesajlari.scrollToPosition(myAdapter!!.itemCount -1)
+                                        recyclerViewSohbetMesajlari.scrollToPosition(myAdapter!!.itemCount - 1)
                                     }
 
 
