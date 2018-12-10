@@ -11,7 +11,7 @@ class MyFirebaseInstanceIDService : FirebaseInstanceIdService() {
 
 
         var refreshedToken:String? = FirebaseInstanceId.getInstance().token
-
+        // token firebase tarafından yenilenirse yeni token değerini veri tabanına kaydet.
         tokeniVeriTabanınaKaydet(refreshedToken)
 
 

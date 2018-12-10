@@ -17,7 +17,7 @@ import com.tosun.ali.sohbetodam.Model.Kullanici
 import com.tosun.ali.sohbetodam.Model.SohbetMesaj
 import com.tosun.ali.sohbetodam.Model.SohbetOdasi
 import com.tosun.ali.sohbetodam.R
-import com.tosun.ali.sohbetodam.SohbetActivity
+import com.tosun.ali.sohbetodam.SohbetOdalariniGoruntuleActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -126,7 +126,7 @@ class YeniSohbetOdasiOlusturFragment : DialogFragment() {
 
                         if (it.isSuccessful) {
 
-                            (activity as SohbetActivity).init()
+                            (activity as SohbetOdalariniGoruntuleActivity).init()
                             dialog.dismiss()
                             Log.e("sohbet1", "dış")
 

@@ -21,8 +21,8 @@ import com.squareup.picasso.Picasso
 import com.tosun.ali.sohbetodam.Model.Kullanici
 import com.tosun.ali.sohbetodam.Model.SohbetOdasi
 import com.tosun.ali.sohbetodam.R
-import com.tosun.ali.sohbetodam.SohbetActivity
-import com.tosun.ali.sohbetodam.SohbetOdasiActivity
+import com.tosun.ali.sohbetodam.SohbetOdalariniGoruntuleActivity
+import com.tosun.ali.sohbetodam.SohmetMesajlariActivity
 import kotlinx.android.synthetic.main.tek_satir_sohbet_odasi_layout.view.*
 
 class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<SohbetOdasi>) : RecyclerView.Adapter<TumSohbetOdalarıAdapter.SohbetOdasiViewHolder>() {
@@ -56,7 +56,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
     inner class SohbetOdasiViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-        var myActivity = (mySohbetOdasiActivity as SohbetActivity)
+        var myActivity = (mySohbetOdasiActivity as SohbetOdalariniGoruntuleActivity)
 
         var imgSohbetOdasiOlusturanProfilResmi: ImageView = itemView.imgSohbetOdasiOlusturanProfilResmi
         var tvSohbetOdasiAdi: TextView = itemView.tvSohbetOdasiAdi
@@ -78,7 +78,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
                 //sohbet odasına tıklayan kişinin kullanıcı idsini ve toplam kaç mesaj okuduğunu firebase e kaydeder.
 
 
-                var intent = Intent(itemView.context, SohbetOdasiActivity::class.java)
+                var intent = Intent(itemView.context, SohmetMesajlariActivity::class.java)
 
                 intent.putExtra("sohbetodasi_id", oAnkiSohbetOdasi.sohbetodasi_id)
 
@@ -100,7 +100,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
                     alertDialog.setPositiveButton("Evet", object : DialogInterface.OnClickListener {
                         override fun onClick(dialog: DialogInterface?, which: Int) {
 
-                            (mySohbetOdasiActivity as SohbetActivity).sohbetOdasiSil(oAnkiSohbetOdasi.sohbetodasi_id)
+                            (mySohbetOdasiActivity as SohbetOdalariniGoruntuleActivity).sohbetOdasiSil(oAnkiSohbetOdasi.sohbetodasi_id)
 
                         }
 

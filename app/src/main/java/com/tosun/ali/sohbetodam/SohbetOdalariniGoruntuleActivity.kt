@@ -15,7 +15,7 @@ import com.tosun.ali.sohbetodam.Model.SohbetMesaj
 import com.tosun.ali.sohbetodam.Model.SohbetOdasi
 import kotlinx.android.synthetic.main.activity_sohbet.*
 
-class SohbetActivity : AppCompatActivity() {
+class SohbetOdalariniGoruntuleActivity : AppCompatActivity() {
 
     lateinit var tumSohbetOdalari: ArrayList<SohbetOdasi>
 
@@ -74,6 +74,7 @@ class SohbetActivity : AppCompatActivity() {
 
                     var tumMesajlar = ArrayList<SohbetMesaj>()
 
+
                     for (sohbetMesajlar in data.child("sohbet_odasi_mesajlari").children!!) {
 
                         var eklenecekSohbetMesaj = sohbetMesajlar.getValue(SohbetMesaj::class.java)
@@ -106,7 +107,7 @@ class SohbetActivity : AppCompatActivity() {
     }
 
     private fun sohbetOdalariListele() {
-        var mySohbetOdasiAdapter = TumSohbetOdalarıAdapter(this@SohbetActivity, tumSohbetOdalari)
+        var mySohbetOdasiAdapter = TumSohbetOdalarıAdapter(this@SohbetOdalariniGoruntuleActivity, tumSohbetOdalari)
         rvSohbetOdalari.adapter = mySohbetOdasiAdapter
         rvSohbetOdalari.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -118,7 +119,7 @@ class SohbetActivity : AppCompatActivity() {
 
         FirebaseDatabaseRef.child("sohbet_odasi").child(sohbetOdasiİd).removeValue()
 
-        Toast.makeText(this@SohbetActivity, "Sohbet odasi silindi", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this@SohbetOdalariniGoruntuleActivity, "Sohbet odasi silindi", Toast.LENGTH_SHORT).show()
 
         init()
 

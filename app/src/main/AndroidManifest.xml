@@ -28,8 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".KullaniciAyarlariActivity" />
-        <activity android:name=".SohbetActivity" />
-        <activity android:name=".SohbetOdasiActivity"></activity>
+        <activity android:name=".SohbetOdalariniGoruntuleActivity" />
+        <activity android:name=".SohmetMesajlariActivity"></activity>
 
         <service android:name=".Services.MyFirebaseMessagingService">
             <intent-filter>

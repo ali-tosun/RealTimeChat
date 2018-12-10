@@ -3,16 +3,11 @@ package com.tosun.ali.sohbetodam
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
-import com.tosun.ali.sohbetodam.Model.Kullanici
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -98,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
             }
             R.id.menuSohbet -> {
-                var intent = Intent(this, SohbetActivity::class.java)
+                var intent = Intent(this, SohbetOdalariniGoruntuleActivity::class.java)
                 startActivity(intent)
 
             }

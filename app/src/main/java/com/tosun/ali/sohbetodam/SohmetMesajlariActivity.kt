@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_sohbet_odasi.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SohbetOdasiActivity : AppCompatActivity() {
+class SohmetMesajlariActivity : AppCompatActivity() {
 
 
     var myAuthStateListener: FirebaseAuth.AuthStateListener? = null
