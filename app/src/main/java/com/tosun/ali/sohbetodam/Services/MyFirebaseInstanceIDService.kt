@@ -20,13 +20,20 @@ class MyFirebaseInstanceIDService : FirebaseInstanceIdService() {
 
     private fun tokeniVeriTabanınaKaydet(refreshedToken:String?) {
 
+
+        var kullanici = FirebaseAuth.getInstance().currentUser
+
+
+        if(kullanici != null){
+
+
         FirebaseDatabase.getInstance().reference
                 .child("kullanici")
-                .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child(kullanici.uid)
                 .child("mesaj_token")
                 .setValue(refreshedToken)
 
-
+        }
 
     }
 

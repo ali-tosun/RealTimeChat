@@ -17,6 +17,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         var data = p0?.data
 
+
+
+
         Log.e("FCM","bildirim baslik $bildirimBaslik bildirim body \n $bildirimBody \n data $data")
 
 

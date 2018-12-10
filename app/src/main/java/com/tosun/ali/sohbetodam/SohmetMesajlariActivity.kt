@@ -116,40 +116,98 @@ class SohmetMesajlariActivity : AppCompatActivity() {
                         .setValue(sohbetMesaj)
 
 
-
-
-
-                var myInterface = ApiClient.client?.create(ApiInterface::class.java)
-
-                var myHeaders:HashMap<String,String> = HashMap<String,String>()
-                myHeaders.put("Content-Type","application/json")
-                myHeaders.put("Authorization","key="+server_key)
-
-
-                var to = "ctNdfjVy4ew:APA91bEbvaa_zp37soTl5ii_X9SDPOo_wtdUlNe6YnZUth-tr_eJ8e5EdUAZOMOuBgkzyTLVLg_JAg63r-h_0VLqivQTK7S7Xs1gzW4BvHLWa7ryogltnFtw9lJcb21vamDx_HrZuYCw"
-                var data = FcmModel.Data("mesaj var.",etSohbetMesaj.text.toString(),"canli")
-
-                var myBody = FcmModel(to,data)
-
-
-
-               var apiCall = myInterface?.bildirimleriGonder(myHeaders,myBody)
-
-                apiCall?.enqueue(object : Callback<Response<FcmModel>>{
-                    override fun onFailure(call: Call<Response<FcmModel>>, t: Throwable) {
-                        Log.e("apiDeneme",t.message.toString())
-                    }
-
-                    override fun onResponse(call: Call<Response<FcmModel>>, response: Response<Response<FcmModel>>) {
-
-                    }
-
-                })
+                //o an sohbet odasında bulunan herkese bildirim gönderilecektir.Oanki kullanıcı hariç
+                bildirimGonder()
 
 
             }
             etSohbetMesaj.setText("")
         }
+
+    }
+
+    private fun bildirimGonder() {
+
+        var ref = FirebaseDatabase.getInstance().reference
+                .child("sohbet_odasi")
+                .child(sohbetOdasiİd!!)
+                .child("sohbet_odasi_kayitli_kisiler")
+                .orderByKey()
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(p0: DataSnapshot) {
+                        for (kullaniciİd in p0!!.children) {
+
+                            var id = kullaniciİd.key
+
+
+                            // kişinin kendisine bildirim göndermemesi için
+                            if (!id.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
+
+                               FirebaseDatabase.getInstance().reference
+                                        .child("kullanici")
+                                        .orderByKey()
+                                        .equalTo(id)
+                                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                                            override fun onCancelled(p0: DatabaseError) {
+
+                                            }
+
+                                            override fun onDataChange(p0: DataSnapshot) {
+
+
+
+                                                var tekKullanici = p0?.children?.iterator().next()
+                                                var gelenMesajToken =tekKullanici.getValue(Kullanici::class.java)!!.mesaj_token
+
+
+
+
+                                                var myInterface = ApiClient.client?.create(ApiInterface::class.java)
+
+                                                var myHeaders: HashMap<String, String> = HashMap<String, String>()
+                                                myHeaders.put("Content-Type", "application/json")
+                                                myHeaders.put("Authorization", "key=" + server_key)
+
+
+                                                var to = gelenMesajToken
+                                                var data = FcmModel.Data("Yeni mesajınız var", etSohbetMesaj.text.toString(), "canli", sohbetOdasiİd!!)
+
+                                                var myBody = FcmModel(to, data)
+
+
+                                                var apiCall = myInterface?.bildirimleriGonder(myHeaders, myBody)
+
+                                                apiCall?.enqueue(object : Callback<Response<FcmModel>> {
+                                                    override fun onFailure(call: Call<Response<FcmModel>>, t: Throwable) {
+                                                        Log.e("FCM", "BAŞARILI")
+                                                    }
+
+                                                    override fun onResponse(call: Call<Response<FcmModel>>, response: Response<Response<FcmModel>>) {
+                                                        Log.e("FCM", "BAŞARISIZ")
+                                                    }
+
+                                                })
+
+
+                                            }
+
+                                        })
+
+
+                            }
+
+
+                        }
+
+
+                    }
+
+                })
+
 
     }
 
