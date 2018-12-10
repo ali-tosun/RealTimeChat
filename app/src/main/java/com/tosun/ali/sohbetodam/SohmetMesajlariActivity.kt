@@ -12,11 +12,17 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.tosun.ali.sohbetodam.Adapter.TumMesajlarAdapter
+import com.tosun.ali.sohbetodam.Model.FcmModel
 import com.tosun.ali.sohbetodam.Model.Kullanici
 import com.tosun.ali.sohbetodam.Model.SohbetMesaj
 import kotlinx.android.synthetic.main.activity_sohbet_odasi.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.create
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 class SohmetMesajlariActivity : AppCompatActivity() {
 
@@ -109,9 +115,40 @@ class SohmetMesajlariActivity : AppCompatActivity() {
                 referans.child(yeniMesajId!!)
                         .setValue(sohbetMesaj)
 
-                etSohbetMesaj.setText("")
+
+
+
+
+                var myInterface = ApiClient.client?.create(ApiInterface::class.java)
+
+                var myHeaders:HashMap<String,String> = HashMap<String,String>()
+                myHeaders.put("Content-Type","application/json")
+                myHeaders.put("Authorization","key="+server_key)
+
+
+                var to = "ctNdfjVy4ew:APA91bEbvaa_zp37soTl5ii_X9SDPOo_wtdUlNe6YnZUth-tr_eJ8e5EdUAZOMOuBgkzyTLVLg_JAg63r-h_0VLqivQTK7S7Xs1gzW4BvHLWa7ryogltnFtw9lJcb21vamDx_HrZuYCw"
+                var data = FcmModel.Data("mesaj var.",etSohbetMesaj.text.toString(),"canli")
+
+                var myBody = FcmModel(to,data)
+
+
+
+               var apiCall = myInterface?.bildirimleriGonder(myHeaders,myBody)
+
+                apiCall?.enqueue(object : Callback<Response<FcmModel>>{
+                    override fun onFailure(call: Call<Response<FcmModel>>, t: Throwable) {
+                        Log.e("apiDeneme",t.message.toString())
+                    }
+
+                    override fun onResponse(call: Call<Response<FcmModel>>, response: Response<Response<FcmModel>>) {
+
+                    }
+
+                })
+
 
             }
+            etSohbetMesaj.setText("")
         }
 
     }
