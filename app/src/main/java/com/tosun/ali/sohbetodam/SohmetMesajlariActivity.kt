@@ -27,6 +27,11 @@ import kotlin.collections.HashMap
 class SohmetMesajlariActivity : AppCompatActivity() {
 
 
+    companion object {
+        var activityAcikMi: Boolean = false
+
+    }
+
     var myAuthStateListener: FirebaseAuth.AuthStateListener? = null
 
     var sohbetOdasiİd: String? = null
@@ -147,7 +152,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
                             // kişinin kendisine bildirim göndermemesi için
                             if (!id.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
 
-                               FirebaseDatabase.getInstance().reference
+                                FirebaseDatabase.getInstance().reference
                                         .child("kullanici")
                                         .orderByKey()
                                         .equalTo(id)
@@ -159,11 +164,8 @@ class SohmetMesajlariActivity : AppCompatActivity() {
                                             override fun onDataChange(p0: DataSnapshot) {
 
 
-
                                                 var tekKullanici = p0?.children?.iterator().next()
-                                                var gelenMesajToken =tekKullanici.getValue(Kullanici::class.java)!!.mesaj_token
-
-
+                                                var gelenMesajToken = tekKullanici.getValue(Kullanici::class.java)!!.mesaj_token
 
 
                                                 var myInterface = ApiClient.client?.create(ApiInterface::class.java)
@@ -220,6 +222,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
     override fun onStart() {
         FirebaseAuth.getInstance().addAuthStateListener(myAuthStateListener!!)
+        activityAcikMi = true
         super.onStart()
     }
 
@@ -229,6 +232,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().removeAuthStateListener(myAuthStateListener!!)
 
         }
+        activityAcikMi = false
         super.onStop()
     }
 
@@ -278,7 +282,21 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
              */
             sohbetOdasindakiMesajlariGetir()
+            okunanMesajSayisiniGüncelle(p0.children.count())
         }
+
+    }
+
+    private fun okunanMesajSayisiniGüncelle(okunanMesajSayisi: Int) {
+
+        var ref = FirebaseDatabase.getInstance().reference
+                .child("sohbet_odasi")
+                .child(sohbetOdasiİd!!)
+                .child("sohbet_odasi_kayitli_kisiler")
+                .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child("okunan_mesaj_sayisi")
+                .setValue(okunanMesajSayisi)
+
 
     }
 
