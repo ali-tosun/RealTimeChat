@@ -1,9 +1,11 @@
 package com.tosun.ali.sohbetodam
 
 import android.content.Intent
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.support.annotation.RequiresApi
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +23,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class SohmetMesajlariActivity : AppCompatActivity() {
@@ -111,10 +116,12 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
                 var ref = FirebaseDatabase.getInstance().reference
 
-                var referans = ref.child("sohbet_odasi").child(sohbetOdasiİd!!).child("sohbet_odasi_mesajlari")
+                var referans = ref.child("sohbet_odasi")
+                        .child(sohbetOdasiİd!!)
+                        .child("sohbet_odasi_mesajlari")
+
 
                 var yeniMesajId = referans.push().key
-
 
 
                 referans.child(yeniMesajId!!)
@@ -122,11 +129,11 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
 
                 //o an sohbet odasında bulunan herkese bildirim gönderilecektir.Oanki kullanıcı hariç
-                bildirimGonder()
+                // bildirimGonder()
 
 
             }
-            etSohbetMesaj.setText("")
+
         }
 
     }
@@ -177,6 +184,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
                                                 var to = gelenMesajToken
                                                 var data = FcmModel.Data("Yeni mesajınız var", etSohbetMesaj.text.toString(), "canli", sohbetOdasiİd!!)
+                                                etSohbetMesaj.setText("")
 
                                                 var myBody = FcmModel(to, data)
 
@@ -185,11 +193,13 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
                                                 apiCall?.enqueue(object : Callback<Response<FcmModel>> {
                                                     override fun onFailure(call: Call<Response<FcmModel>>, t: Throwable) {
-                                                        Log.e("FCM", "BAŞARILI")
+                                                        Log.e("FCM", "Başarısız")
+
                                                     }
 
                                                     override fun onResponse(call: Call<Response<FcmModel>>, response: Response<Response<FcmModel>>) {
-                                                        Log.e("FCM", "BAŞARISIZ")
+                                                        Log.e("FCM", "başarılı")
+
                                                     }
 
                                                 })
@@ -282,7 +292,8 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
              */
             sohbetOdasindakiMesajlariGetir()
-            okunanMesajSayisiniGüncelle(p0.children.count())
+            if (activityAcikMi)
+                okunanMesajSayisiniGüncelle(p0.children.count())
         }
 
     }
@@ -405,17 +416,62 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
 
         if (myAdapter == null) {
-            initMesajlarListesi()
+            initMesajlarListesi(tumMesajlar!!)
         }
 
 
     }
 
-    private fun initMesajlarListesi() {
+    private fun initMesajlarListesi(tumMesajlar: ArrayList<SohbetMesaj>) {
 
+        /* Collections.sort(tumMesajlar,SohbetMesaj.TimeStampComparator)
+
+         for(i in tumMesajlar!!){
+             Log.e("deneme1",""+i.toString())
+         }*/
+
+
+        var myHashMap: HashMap<String, SohbetMesaj> = HashMap<String, SohbetMesaj>()
+
+        for (eleman in tumMesajlar!!) {
+
+            myHashMap.put(eleman.timestamp.toString(), eleman)
+
+        }
+
+        var myMap: TreeMap<String, SohbetMesaj> = TreeMap<String, SohbetMesaj>(myHashMap)
+        printMap(myMap)
+
+
+
+
+
+
+
+
+        Log.e("mesajSize", "${tumMesajlar?.size}")
         myAdapter = TumMesajlarAdapter(this, tumMesajlar!!)
         recyclerViewSohbetMesajlari.adapter = myAdapter
         recyclerViewSohbetMesajlari.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+
+    }
+
+    private fun printMap(map: TreeMap<String, SohbetMesaj>) {
+
+
+        var s = map.entries
+        var it = s.iterator()
+
+        while (it.hasNext()) {
+
+            var entry = it.next()
+            var key = entry.key
+            var value = entry.value
+            Log.e("hashdeneme", "key $key")
+            //  Log.e("hashdeneme", "value $value")
+
+        }
 
 
     }
@@ -440,6 +496,11 @@ class SohmetMesajlariActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val dateTimeStrToLocalDateTime: (String) -> LocalDateTime = {
+        LocalDateTime.parse(it, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
     }
 }
 

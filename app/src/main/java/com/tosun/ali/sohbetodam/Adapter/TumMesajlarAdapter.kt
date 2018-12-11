@@ -3,6 +3,7 @@ package com.tosun.ali.sohbetodam.Adapter
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,27 @@ import com.squareup.picasso.Picasso
 import com.tosun.ali.sohbetodam.Model.SohbetMesaj
 import com.tosun.ali.sohbetodam.R
 import kotlinx.android.synthetic.main.tek_satir_mesaj_layout.view.*
+import java.util.*
 
 
 class TumMesajlarAdapter(context: Context, tumMesajlar: ArrayList<SohbetMesaj>) : RecyclerView.Adapter<TumMesajlarAdapter.SohbetMesajlarViewHolder>() {
 
     var myContext = context
     var tumSohbetMesajlari = tumMesajlar
+    init{
+
+        var myHashMap: HashMap<String, SohbetMesaj> = HashMap<String, SohbetMesaj>()
+
+        for (eleman in tumMesajlar!!) {
+
+            myHashMap.put(eleman.timestamp.toString(), eleman)
+
+        }
+
+        var myMap: TreeMap<String, SohbetMesaj> = TreeMap<String, SohbetMesaj>(myHashMap)
+        printMap(myMap)
+
+    }
 
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SohbetMesajlarViewHolder {
@@ -93,6 +109,26 @@ class TumMesajlarAdapter(context: Context, tumMesajlar: ArrayList<SohbetMesaj>) 
 
 
         }
+
+    }
+
+
+    private fun printMap(map: TreeMap<String, SohbetMesaj>) {
+
+
+        var s = map.entries
+        var it = s.iterator()
+
+        while (it.hasNext()) {
+
+            var entry = it.next()
+            var key = entry.key
+            var value = entry.value
+            Log.e("hashdeneme", "key $key")
+            //  Log.e("hashdeneme", "value $value")
+
+        }
+
 
     }
 }
