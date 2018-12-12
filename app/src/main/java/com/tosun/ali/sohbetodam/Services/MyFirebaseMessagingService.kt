@@ -28,91 +28,84 @@ import java.util.*
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-var okunmayiBekleyenMesajSayisi = 0
+    var okunmayiBekleyenMesajSayisi = 0
 
     override fun onMessageReceived(p0: RemoteMessage?) {
 
         // activity açık değilse
-        if(!SohmetMesajlariActivity.activityAcikMi){
+        if (!SohmetMesajlariActivity.activityAcikMi) {
 
 
+            var bildirimBaslik = p0?.notification?.title
 
-        var bildirimBaslik = p0?.notification?.title
+            var bildirimBody = p0?.notification?.body
 
-        var bildirimBody = p0?.notification?.body
-
-        var data = p0?.data
-
-
-        var baslik  = p0?.data?.get("baslik")
-        var icerik =p0?.data?.get("icerik")
-        var sohbet_odasi_id =p0?.data!!.get("sohbet_odasi_id")
-        var bildirim_turu = p0?.data.get("bildirim_turu")
+            var data = p0?.data
 
 
-
-        //bildirimde gönderilecek mesaj sayiları ve sohbetodasi bilgilerinin alınması.
-        var ref = FirebaseDatabase.getInstance().reference
-                .child("sohbet_odasi")
-                .orderByKey()
-                .equalTo(sohbet_odasi_id)
-                .addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onCancelled(p0: DatabaseError) {
-
-                    }
-
-                    @SuppressLint("NewApi")
-                    @TargetApi(Build.VERSION_CODES.M)
-                    @RequiresApi(Build.VERSION_CODES.M)
-                    override fun onDataChange(p0: DataSnapshot) {
-
-                        var tekSohbetOdasiSnapShot = p0.children.iterator().next()
-
-                        var tekSohbetOdasi = tekSohbetOdasiSnapShot.getValue() as HashMap<String,Objects>
-
-                        var oAnkiSohbetOdasi = SohbetOdasi()
-
-                        oAnkiSohbetOdasi.olusturan_id = tekSohbetOdasi.get("olusturan_id").toString()
-                        oAnkiSohbetOdasi.sohbetodasi_adi = tekSohbetOdasi.get("sohbetodasi_adi").toString()
-                        oAnkiSohbetOdasi.sohbetodasi_id = tekSohbetOdasi.get("sohbetodasi_id").toString()
-                        oAnkiSohbetOdasi.seviye = tekSohbetOdasi.get("seviye").toString()
+            var baslik = p0?.data?.get("baslik")
+            var icerik = p0?.data?.get("icerik")
+            var sohbet_odasi_id = p0?.data!!.get("sohbet_odasi_id")
+            var bildirim_turu = p0?.data.get("bildirim_turu")
 
 
-                       var okunanMesajSayisi = tekSohbetOdasiSnapShot.child("sohbet_odasi_kayitli_kisiler")
-                               .child(FirebaseAuth.getInstance().currentUser!!.uid)
-                               .child("okunan_mesaj_sayisi")
-                               .getValue().toString().toInt()
+            //bildirimde gönderilecek mesaj sayiları ve sohbetodasi bilgilerinin alınması.
+            var ref = FirebaseDatabase.getInstance().reference
+                    .child("sohbet_odasi")
+                    .orderByKey()
+                    .equalTo(sohbet_odasi_id)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) {
+
+                        }
+
+                        @SuppressLint("NewApi")
+                        @TargetApi(Build.VERSION_CODES.M)
+                        @RequiresApi(Build.VERSION_CODES.M)
+                        override fun onDataChange(p0: DataSnapshot) {
+
+                            var tekSohbetOdasiSnapShot = p0.children.iterator().next()
+
+                            var tekSohbetOdasi = tekSohbetOdasiSnapShot.getValue() as HashMap<String, Objects>
+
+                            var oAnkiSohbetOdasi = SohbetOdasi()
+
+                            oAnkiSohbetOdasi.olusturan_id = tekSohbetOdasi.get("olusturan_id").toString()
+                            oAnkiSohbetOdasi.sohbetodasi_adi = tekSohbetOdasi.get("sohbetodasi_adi").toString()
+                            oAnkiSohbetOdasi.sohbetodasi_id = tekSohbetOdasi.get("sohbetodasi_id").toString()
+                            oAnkiSohbetOdasi.seviye = tekSohbetOdasi.get("seviye").toString()
 
 
-                        var toplamMesajSayisi = tekSohbetOdasiSnapShot?.child("sohbet_odasi_mesajlari")!!.childrenCount.toInt()
+                            var okunanMesajSayisi = tekSohbetOdasiSnapShot.child("sohbet_odasi_kayitli_kisiler")
+                                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                                    .child("okunan_mesaj_sayisi")
+                                    .getValue().toString().toInt()
 
-                        okunmayiBekleyenMesajSayisi = toplamMesajSayisi - okunanMesajSayisi
+
+                            var toplamMesajSayisi = tekSohbetOdasiSnapShot?.child("sohbet_odasi_mesajlari")!!.childrenCount.toInt()
+
+                            okunmayiBekleyenMesajSayisi = toplamMesajSayisi - okunanMesajSayisi
 
 
-                        //bildirimGonder(baslik,icerik,oAnkiSohbetOdasi)
+                            //bildirimGonder(baslik,icerik,oAnkiSohbetOdasi)
 
-                        createNotification("aMessage",icerik.toString(),oAnkiSohbetOdasi,this@MyFirebaseMessagingService)
+                            createNotification("aMessage", icerik.toString(), oAnkiSohbetOdasi, this@MyFirebaseMessagingService)
 
-                    }
+                        }
 
-                })
+                    })
 
-            Log.e("FCM","bildirim baslik $baslik bildirim icerk \n $icerik \n sohbet odasi id $sohbet_odasi_id \n bildirim türü $bildirim_turu")
+            Log.e("FCM", "bildirim baslik $baslik bildirim icerk \n $icerik \n sohbet odasi id $sohbet_odasi_id \n bildirim türü $bildirim_turu")
         }
-
-
-
-
 
 
     }
 
 
-
     @TargetApi(Build.VERSION_CODES.M)
-    fun createNotification(aMessage: String, icerik:String, oAnkiSohbetOdasi: SohbetOdasi, context: Context) {
+    fun createNotification(aMessage: String, icerik: String, oAnkiSohbetOdasi: SohbetOdasi, context: Context) {
         val NOTIFY_ID = notificationIdOlustur() // ID of notification
-        var notifManager:NotificationManager?=null
+        var notifManager: NotificationManager? = null
 
         val id = "default channel id" // default_channel_id
         val title = "default channel" // Default Channel
@@ -132,117 +125,59 @@ var okunmayiBekleyenMesajSayisi = 0
                 notifManager!!.createNotificationChannel(mChannel)
             }
             builder = NotificationCompat.Builder(context, id)
-           // intent = Intent(context, MainActivity::class.java)
+            // intent = Intent(context, MainActivity::class.java)
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             //pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
             builder.setSmallIcon(R.drawable.ic_notifications_active)
-                    .setLargeIcon(BitmapFactory.decodeResource(resources,R.drawable.ic_notifications_active))
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notifications_active))
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setContentTitle(oAnkiSohbetOdasi.sohbetodasi_adi +" odasından"+" yeni mesajınız var")
-                    .setContentText(""+icerik)
+                    .setContentTitle(oAnkiSohbetOdasi.sohbetodasi_adi + " odasından" + " yeni mesajınız var")
+                    .setContentText("" + icerik)
                     .setColor(getColor(R.color.colorAccent))
                     .setAutoCancel(true)
-                    .setSubText(""+okunmayiBekleyenMesajSayisi+" yeni mesaj")
+                    .setSubText("" + okunmayiBekleyenMesajSayisi + " yeni mesaj")
                     .setStyle(NotificationCompat.BigTextStyle().bigText(icerik))
                     .setNumber(NOTIFY_ID)
                     .setOnlyAlertOnce(true)
                     .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
         } else {
             builder = NotificationCompat.Builder(context, id)
-           // intent = Intent(context, MainActivity::class.java)
+            // intent = Intent(context, MainActivity::class.java)
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             //pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
             builder.setSmallIcon(R.drawable.ic_notifications_active)
-                    .setLargeIcon(BitmapFactory.decodeResource(resources,R.drawable.ic_notifications_active))
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notifications_active))
                     .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setContentTitle(oAnkiSohbetOdasi.sohbetodasi_adi +"odasından"+"yeni mesajınız var")
-                    .setContentText(""+icerik)
+                    .setContentTitle(oAnkiSohbetOdasi.sohbetodasi_adi + "odasından" + "yeni mesajınız var")
+                    .setContentText("" + icerik)
                     .setColor(getColor(R.color.colorAccent))
                     .setAutoCancel(true)
-                    .setSubText(""+okunmayiBekleyenMesajSayisi+" yeni mesaj")
+                    .setSubText("" + okunmayiBekleyenMesajSayisi + " yeni mesaj")
                     .setStyle(NotificationCompat.BigTextStyle().bigText(icerik))
                     .setNumber(NOTIFY_ID)
                     .setOnlyAlertOnce(true)
                     .setVibrate(longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400))
         }
+
         val notification = builder.build()
         notifManager!!.notify(NOTIFY_ID, notification)
     }
 
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun bildirimGonder(baslik: String?, icerik: String?, oAnkiSohbetOdasi: SohbetOdasi) {
-
-        var notificationSayisiOlustur = notificationIdOlustur()
-        Log.e("FCM","SAYI DENEMESİ $notificationSayisiOlustur")
 
 
-        var builder =NotificationCompat.Builder(this,oAnkiSohbetOdasi.sohbetodasi_adi)
-                .setSmallIcon(R.drawable.ic_notifications_active)
-                .setLargeIcon(BitmapFactory.decodeResource(resources,R.drawable.ic_notifications_active))
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentTitle(oAnkiSohbetOdasi.sohbetodasi_adi +"odasından"+baslik)
-                .setContentText(""+icerik)
-                .setColor(getColor(R.color.colorAccent))
-                .setAutoCancel(true)
-                .setSubText(""+okunmayiBekleyenMesajSayisi+" yeni mesaj")
-                .setStyle(NotificationCompat.BigTextStyle().bigText(icerik))
-                .setNumber(notificationSayisiOlustur)
-                .setOnlyAlertOnce(true)
-                .build()
+    private fun notificationIdOlustur(): Int {
 
-        var notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        /*var id = "id"
-        var name:CharSequence = "name"
-        var description ="description"
-
-        var importance = NotificationManager.IMPORTANCE_LOW
-
-        var mChannel =NotificationChannel(id,name,importance)
-
-        mChannel.description=description
-        mChannel.enableLights(true)
-        mChannel.lightColor= Color.RED
-        mChannel.enableVibration(true)
-        mChannel.vibrationPattern = longArrayOf(100,200,300,400,500,400,300,200,400)
-
-        notificationManager.createNotificationChannel(mChannel)
-
-
-*/
-
-        @RequiresApi(O)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("Yeni Takip isteği", "Channel human readable title", NotificationManager.IMPORTANCE_DEFAULT)
-            notificationManager.createNotificationChannel(channel)
-        }
-
-
-
-
-        notificationManager.notify(notificationSayisiOlustur,builder)
-
-
-
-
-
-
-
-    }
-
-    private fun notificationIdOlustur():Int{
-
-        var sayi=(100..999).random() +(100..999).random()+(100..999).random()
+        var sayi = (100..999).random() + (100..999).random() + (100..999).random()
 
         return sayi
-
 
 
     }
 
     fun IntRange.random() =
-            Random().nextInt((endInclusive + 1) - start) +  start
+            Random().nextInt((endInclusive + 1) - start) + start
 }
 
 

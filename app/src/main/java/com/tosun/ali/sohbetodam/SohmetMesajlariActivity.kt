@@ -129,7 +129,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
 
                 //o an sohbet odasında bulunan herkese bildirim gönderilecektir.Oanki kullanıcı hariç
-                // bildirimGonder()
+                bildirimGonder()
 
 
             }
@@ -291,7 +291,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
             p0 da sadece değişen veri vardır fakat , her mesaj atıldığında tüm mesajları getirmek en doğrusu olabilir.
 
              */
-            sohbetOdasindakiMesajlariGetir()
+            sohbetOdasindakiMesajlariGetir(p0.children.count())
             if (activityAcikMi)
                 okunanMesajSayisiniGüncelle(p0.children.count())
         }
@@ -311,7 +311,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
     }
 
-    private fun sohbetOdasindakiMesajlariGetir() {
+    private fun sohbetOdasindakiMesajlariGetir(tümMesajSayisi:Int) {
 
         if (tumMesajlar == null) {
             //sohbet odasında hiç mesaj yoksa , yani ilk defa çalışıyorsa tumMesajlar listesini oluştur.
@@ -389,11 +389,6 @@ class SohmetMesajlariActivity : AppCompatActivity() {
                                     })
 
 
-
-
-                                    Log.e("denemes", "fonksiyon çağrılış.")
-
-
                                 } else {
                                     geciciMesaj.mesaj = mesaj.getValue(SohbetMesaj::class.java)!!.mesaj
                                     geciciMesaj.adi = "veli"
@@ -407,46 +402,25 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
 
                         }
-
+                        //&& tümMesajSayisi==tumMesajlar!!.size
 
                     }
 
+
+
                 })
 
-
-
         if (myAdapter == null) {
-            initMesajlarListesi(tumMesajlar!!)
+            initMesajlarListesi()
         }
+
+
+
 
 
     }
 
-    private fun initMesajlarListesi(tumMesajlar: ArrayList<SohbetMesaj>) {
-
-        /* Collections.sort(tumMesajlar,SohbetMesaj.TimeStampComparator)
-
-         for(i in tumMesajlar!!){
-             Log.e("deneme1",""+i.toString())
-         }*/
-
-
-        var myHashMap: HashMap<String, SohbetMesaj> = HashMap<String, SohbetMesaj>()
-
-        for (eleman in tumMesajlar!!) {
-
-            myHashMap.put(eleman.timestamp.toString(), eleman)
-
-        }
-
-        var myMap: TreeMap<String, SohbetMesaj> = TreeMap<String, SohbetMesaj>(myHashMap)
-        printMap(myMap)
-
-
-
-
-
-
+    private fun initMesajlarListesi() {
 
 
         Log.e("mesajSize", "${tumMesajlar?.size}")
@@ -457,24 +431,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
     }
 
-    private fun printMap(map: TreeMap<String, SohbetMesaj>) {
 
-
-        var s = map.entries
-        var it = s.iterator()
-
-        while (it.hasNext()) {
-
-            var entry = it.next()
-            var key = entry.key
-            var value = entry.value
-            Log.e("hashdeneme", "key $key")
-            //  Log.e("hashdeneme", "value $value")
-
-        }
-
-
-    }
 
 
     private fun baslatMesajListener() {
@@ -498,10 +455,6 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    val dateTimeStrToLocalDateTime: (String) -> LocalDateTime = {
-        LocalDateTime.parse(it, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-    }
 }
 
 

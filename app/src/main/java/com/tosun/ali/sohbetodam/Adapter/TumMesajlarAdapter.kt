@@ -13,39 +13,31 @@ import com.tosun.ali.sohbetodam.Model.SohbetMesaj
 import com.tosun.ali.sohbetodam.R
 import kotlinx.android.synthetic.main.tek_satir_mesaj_layout.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class TumMesajlarAdapter(context: Context, tumMesajlar: ArrayList<SohbetMesaj>) : RecyclerView.Adapter<TumMesajlarAdapter.SohbetMesajlarViewHolder>() {
+class TumMesajlarAdapter(context: Context, var tumMesajlar: ArrayList<SohbetMesaj>) : RecyclerView.Adapter<TumMesajlarAdapter.SohbetMesajlarViewHolder>() {
 
     var myContext = context
-    var tumSohbetMesajlari = tumMesajlar
-    init{
 
-        var myHashMap: HashMap<String, SohbetMesaj> = HashMap<String, SohbetMesaj>()
-
-        for (eleman in tumMesajlar!!) {
-
-            myHashMap.put(eleman.timestamp.toString(), eleman)
-
+    val tumSohbetMesajlari: ArrayList<SohbetMesaj>
+        get() {
+            Collections.sort(tumMesajlar, SohbetMesaj.TimeStampComparator)
+            return tumMesajlar
         }
-
-        var myMap: TreeMap<String, SohbetMesaj> = TreeMap<String, SohbetMesaj>(myHashMap)
-        printMap(myMap)
-
-    }
 
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SohbetMesajlarViewHolder {
 
+
         var inflater = LayoutInflater.from(myContext)
 
-        var  view:View? = null
+        var view: View? = null
 
-        if(p1 == 2){
+        if (p1 == 2) {
             view = inflater.inflate(R.layout.tek_satir_mesaj_layout2, p0, false)
 
-        }
-        else{
+        } else {
             view = inflater.inflate(R.layout.tek_satir_mesaj_layout, p0, false)
         }
 
@@ -56,15 +48,14 @@ class TumMesajlarAdapter(context: Context, tumMesajlar: ArrayList<SohbetMesaj>) 
 
     }
 
-     override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position: Int): Int {
 
-         //mesajı biz yolladıysak..
-         if(tumSohbetMesajlari.get(position).kullanici_id.equals(FirebaseAuth.getInstance().currentUser!!.uid)){
-             return 2
-         }
-         else{
-             return 1
-         }
+        //mesajı biz yolladıysak..
+        if (tumSohbetMesajlari.get(position).kullanici_id.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
+            return 2
+        } else {
+            return 1
+        }
 
 
     }
@@ -98,7 +89,6 @@ class TumMesajlarAdapter(context: Context, tumMesajlar: ArrayList<SohbetMesaj>) 
             mesajTarih.text = oAnkiMesaj.timestamp
 
 
-
             //bi kullanıcı mesajı ise...
             //kullanıcı profil fotoğrafı koymaz ise sohbet odasında yazar ismi gözükmez.bu problemin çözülmesi lazım!.
             if (!oAnkiMesaj.profil_resmi.isNullOrEmpty()) {
@@ -112,23 +102,4 @@ class TumMesajlarAdapter(context: Context, tumMesajlar: ArrayList<SohbetMesaj>) 
 
     }
 
-
-    private fun printMap(map: TreeMap<String, SohbetMesaj>) {
-
-
-        var s = map.entries
-        var it = s.iterator()
-
-        while (it.hasNext()) {
-
-            var entry = it.next()
-            var key = entry.key
-            var value = entry.value
-            Log.e("hashdeneme", "key $key")
-            //  Log.e("hashdeneme", "value $value")
-
-        }
-
-
-    }
 }
