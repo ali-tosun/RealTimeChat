@@ -18,6 +18,7 @@ import com.tosun.ali.sohbetodam.Model.SohbetMesaj
 import com.tosun.ali.sohbetodam.Model.SohbetOdasi
 import com.tosun.ali.sohbetodam.R
 import com.tosun.ali.sohbetodam.SohbetOdalariniGoruntuleActivity
+import kotlinx.android.synthetic.main.fragment_yeni_sohbet_odasi_olustur.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,6 +28,7 @@ class YeniSohbetOdasiOlusturFragment : DialogFragment() {
     lateinit var seekBarSohbetOdasiSeviyesi: SeekBar
     lateinit var tvSohbetOdasiSeviyesi: TextView
     lateinit var btnYeniSohbetOdasiOlustur: Button
+    lateinit var etSohbetOdasiParola:EditText
     var mProgress = 0
     var kullaniciSeviyesi = 0
 
@@ -39,6 +41,7 @@ class YeniSohbetOdasiOlusturFragment : DialogFragment() {
         seekBarSohbetOdasiSeviyesi = view.findViewById(R.id.seekBarSohbetOdasiSeviye)
         tvSohbetOdasiSeviyesi = view.findViewById(R.id.tvSohbetOdasiSeviye)
         btnYeniSohbetOdasiOlustur = view.findViewById(R.id.btnYeniSohbetOdasiOlustur)
+        etSohbetOdasiParola = view.findViewById(R.id.etSohbetOdasiParola)
 
 
 
@@ -106,6 +109,7 @@ class YeniSohbetOdasiOlusturFragment : DialogFragment() {
             veriTabanınaEklenilecekSohbetOdasi.sohbetodasi_id = sohbetOdasiİd!!
 
             FirebaseDatabaseRef.child("sohbet_odasi").child(sohbetOdasiİd).setValue(veriTabanınaEklenilecekSohbetOdasi)
+            FirebaseDatabaseRef.child("sohbet_odasi").child(sohbetOdasiİd).child("parola").setValue(etSohbetOdasiParola.text.toString())
 
 
             var mesajId = FirebaseDatabaseRef.child("sohbet_odasi").push().key

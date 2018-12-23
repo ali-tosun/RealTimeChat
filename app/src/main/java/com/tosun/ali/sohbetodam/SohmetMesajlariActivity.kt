@@ -35,6 +35,8 @@ class SohmetMesajlariActivity : AppCompatActivity() {
     companion object {
         var activityAcikMi: Boolean = false
 
+        //değişiklik
+
     }
 
     var myAuthStateListener: FirebaseAuth.AuthStateListener? = null

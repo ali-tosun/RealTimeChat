@@ -12,30 +12,29 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="Sohbet Odası Adı"
-        app:layout_constraintBottom_toTopOf="@+id/etSohbetOdasıAdi"
-        app:layout_constraintStart_toStartOf="@+id/etSohbetOdasıAdi"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etSohbetOdasıAdi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="11dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <SeekBar
         android:id="@+id/seekBarSohbetOdasiSeviye"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="7dp"
         android:layout_marginEnd="8dp"
         android:max="10"
         app:layout_constraintEnd_toEndOf="@+id/etSohbetOdasıAdi"
@@ -46,33 +45,42 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Seviye:"
-        app:layout_constraintStart_toStartOf="@+id/etSohbetOdasıAdi"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSohbetOdasıAdi" />
 
     <TextView
         android:id="@+id/tvSohbetOdasiSeviye"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="0"
+        app:layout_constraintBottom_toTopOf="@+id/etSohbetOdasiParola"
         app:layout_constraintEnd_toEndOf="@+id/seekBarSohbetOdasiSeviye"
-        app:layout_constraintStart_toStartOf="@+id/seekBarSohbetOdasiSeviye"
-        app:layout_constraintTop_toBottomOf="@+id/seekBarSohbetOdasiSeviye" />
+        app:layout_constraintStart_toStartOf="@+id/seekBarSohbetOdasiSeviye" />
 
     <Button
         android:id="@+id/btnYeniSohbetOdasiOlustur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="146dp"
+        android:layout_marginBottom="146dp"
         android:text="Oluştur"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/seekBarSohbetOdasiSeviye"
-        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSohbetOdasiSeviye" />
+        app:layout_constraintTop_toTopOf="@+id/etSohbetOdasiParola" />
+
+    <EditText
+        android:id="@+id/etSohbetOdasiParola"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:hint="Parola"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarSohbetOdasiSeviye" />
 </android.support.constraint.ConstraintLayout>
