@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
+import com.tosun.ali.sohbetodam.DersDetaylariActivity
 import com.tosun.ali.sohbetodam.Fragment.DersSifresiGirisFragment
 import com.tosun.ali.sohbetodam.Fragment.YeniSohbetOdasiOlusturFragment
 import com.tosun.ali.sohbetodam.Model.Kullanici
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.tek_satir_sohbet_odasi_layout.view.*
 
 class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<SohbetOdasi>) : RecyclerView.Adapter<TumSohbetOdalarıAdapter.SohbetOdasiViewHolder>() {
 
-
+    var parola = ""
     companion object {
         var sohbet_odasi_id: String = ""
     }
@@ -87,14 +88,11 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
             itemView.setOnClickListener {
 
 
-                kullaniciyiSohbetOdasinaKaydet(oAnkiSohbetOdasi)
 
-                /*  if (dersSifresi.equals("")) {
-                      kullaniciParolasınıKaydet(oAnkiSohbetOdasi)
-                  }*/
 
-                var odaninParolasi = sohbetOdasiParolasiniGetir(oAnkiSohbetOdasi)
-                Log.e("odaparola", odaninParolasi)
+
+                sohbetOdasiParolasiniGetir(oAnkiSohbetOdasi)
+
 
 
                 var ref = FirebaseDatabase.getInstance().reference
@@ -121,8 +119,9 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
                                     Log.e("p0", "my parola $myParola")
 
                                     //parolası başarılı ise.
-                                    if (myParola.equals(odaninParolasi)) {
-                                        var intent = Intent(itemView.context, SohmetMesajlariActivity::class.java)
+                                    if (myParola.equals(parola)) {
+                                        kullaniciyiSohbetOdasinaKaydet(oAnkiSohbetOdasi)
+                                        var intent = Intent(itemView.context, DersDetaylariActivity::class.java)
 
                                         intent.putExtra("sohbetodasi_id", oAnkiSohbetOdasi.sohbetodasi_id)
 
@@ -155,7 +154,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
 
                 var dersSifresi = etParola.text.toString()
 
-                if (!dersSifresi.isNullOrEmpty()) {
+                if (dersSifresi.equals(parola)) {
 
 
                     FirebaseDatabase.getInstance().reference
@@ -228,48 +227,47 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
 
         }
 
-        private fun sohbetOdasiParolasiniGetir(oAnkiSohbetOdasi: SohbetOdasi): String {
+        private fun sohbetOdasiParolasiniGetir(oAnkiSohbetOdasi: SohbetOdasi) {
 
             Log.e("tyty", "tyty")
-            var parola: String = ""
-            var seviye:String = ""
+            Log.e("muhabbet",oAnkiSohbetOdasi.sohbetodasi_id)
 
             var FirebaseDatabaseRef = FirebaseDatabase.getInstance().reference
-
-            var FirebaseDatabaseQuery = FirebaseDatabaseRef.child("sohbet_odasi")
-                    .orderByValue()
+                    .child("sohbet_odasi")
+                    .orderByKey()
                     .equalTo(oAnkiSohbetOdasi.sohbetodasi_id)
 
-            FirebaseDatabaseQuery
                     .addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) {
                             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                         }
 
                         override fun onDataChange(p0: DataSnapshot) {
+                            Log.e("muhabbet",p0.toString())
 
                             for (data in p0.children) {
 
-                              var nesneMap = data.getValue() as HashMap<String, Object>
+                                Log.e("muhabbet1",data.toString())
+                                var oAnkiSohbetOdasi = SohbetOdasi()
 
+                                // HashMap kullanılmasının nedeni, sohbet_odasi childinin içinde bir ArrayList Var
+                                // klasik yöntemler ile arrayList atamasını yapamayız.
+
+                                var nesneMap = data.getValue() as HashMap<String, Object>
+                                Log.e("muhabbet1",nesneMap.toString())
                                 parola = nesneMap.get("parola").toString()
-                                seviye = nesneMap.get("seviye").toString()
-                                Log.e("asd","$parola asddd")
-
-                                parola = data.child("parola").getValue().toString()
-
-                                Log.e("asd","$parola asddd")
+                                Log.e("muhabbet1",parola)
 
 
                             }
+
                         }
 
                     })
 
-            Log.e("sohbetparola", "$parola asd")
-            Log.e("sohbetseviye", "$seviye asd")
 
-            return parola
+
+
         }
 
 

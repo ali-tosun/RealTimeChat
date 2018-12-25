@@ -132,6 +132,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
                 //o an sohbet odasında bulunan herkese bildirim gönderilecektir.Oanki kullanıcı hariç
                 bildirimGonder()
+                etSohbetMesaj.setText("")
 
 
             }
@@ -186,7 +187,7 @@ class SohmetMesajlariActivity : AppCompatActivity() {
 
                                                 var to = gelenMesajToken
                                                 var data = FcmModel.Data("Yeni mesajınız var", etSohbetMesaj.text.toString(), "canli", sohbetOdasiİd!!)
-                                                etSohbetMesaj.setText("")
+                                               // etSohbetMesaj.setText("")
 
                                                 var myBody = FcmModel(to, data)
 
