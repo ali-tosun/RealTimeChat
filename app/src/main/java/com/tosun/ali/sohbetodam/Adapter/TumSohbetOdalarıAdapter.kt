@@ -18,14 +18,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import com.tosun.ali.sohbetodam.DersDetaylariActivity
+import com.tosun.ali.sohbetodam.*
 import com.tosun.ali.sohbetodam.Fragment.DersSifresiGirisFragment
 import com.tosun.ali.sohbetodam.Fragment.YeniSohbetOdasiOlusturFragment
 import com.tosun.ali.sohbetodam.Model.Kullanici
 import com.tosun.ali.sohbetodam.Model.SohbetOdasi
-import com.tosun.ali.sohbetodam.R
-import com.tosun.ali.sohbetodam.SohbetOdalariniGoruntuleActivity
-import com.tosun.ali.sohbetodam.SohmetMesajlariActivity
 import kotlinx.android.synthetic.main.tek_satir_sohbet_odasi_layout.view.*
 
 class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<SohbetOdasi>) : RecyclerView.Adapter<TumSohbetOdalarıAdapter.SohbetOdasiViewHolder>() {
@@ -121,7 +118,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
                                     //parolası başarılı ise.
                                     if (myParola.equals(parola)) {
                                         kullaniciyiSohbetOdasinaKaydet(oAnkiSohbetOdasi)
-                                        var intent = Intent(itemView.context, DersDetaylariActivity::class.java)
+                                        var intent = Intent(itemView.context, DersDetayEkleActivity::class.java)
 
                                         intent.putExtra("sohbetodasi_id", oAnkiSohbetOdasi.sohbetodasi_id)
 

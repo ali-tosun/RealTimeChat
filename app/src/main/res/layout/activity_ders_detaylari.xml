@@ -4,44 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DersDetaylariActivity"
+    tools:context=".DersDetaylariDokumanActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/btnCanlıSohbet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="41dp"
+        android:layout_marginStart="56dp"
         android:text="Canlı Sohbete Git"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnFetcFile"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnUploadFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="18dp"
         android:text="Upload"
-        app:layout_constraintStart_toStartOf="@+id/btnSelectFile"
+        app:layout_constraintStart_toStartOf="@+id/tvFileStatus"
         app:layout_constraintTop_toBottomOf="@+id/tvFileStatus" />
 
     <Button
         android:id="@+id/btnSelectFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="67dp"
-        android:text="Choose"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="14dp"
+        android:text="Görüntüle"
+        app:layout_constraintBottom_toTopOf="@+id/tvFileStatus"
+        app:layout_constraintEnd_toEndOf="@+id/tvFileStatus" />
 
     <TextView
         android:id="@+id/tvFileStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginEnd="129dp"
         android:text="No file is selected"
-        app:layout_constraintStart_toStartOf="@+id/btnSelectFile"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectFile" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnFetcFile"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnFetcFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="76dp"
+        android:text="Fetch File"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/etDokumanAdi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:ems="10"
+        android:hint="Döküman Adını Giriniz"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="10dp"
+        android:text="Yüklemek istediğiniz dökümanın adını girin ve görüntüle butonuna basarak dökümanı seçtikten sonra Upload butonuna basınız."
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etDokumanAdi" />
 </android.support.constraint.ConstraintLayout>

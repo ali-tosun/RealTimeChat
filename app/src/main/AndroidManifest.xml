@@ -42,7 +42,16 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".DersDetaylariActivity"></activity>
+        <activity android:name=".DersDetaylariDokumanActivity" />
+        <activity android:name=".DersDetaylariOgrenciActivity" />
+        <activity android:name=".Adapter.DersDetaylariOgrenciAdapter" />
+        <activity
+            android:name=".ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DersDetayEkleActivity" />
+        <activity android:name=".DersDetaylariOdevActivity" />
+        <activity android:name=".CalendarActivity"></activity>
     </application>
 
 </manifest>
