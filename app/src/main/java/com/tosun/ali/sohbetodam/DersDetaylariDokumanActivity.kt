@@ -164,10 +164,11 @@ class DersDetaylariDokumanActivity : AppCompatActivity() {
                 var yeniOdevId = referans.push().key
 
                 var geciciDokuman = Dokuman()
+                geciciDokuman.dokuman_adi = etDokumanAdi.text.toString()
                 geciciDokuman.yukleyen_kisi = yukleyen_id
                 geciciDokuman.download_link = downloadUrl.toString()
                 geciciDokuman.olusturulma_zamani=yuklenmeZamani
-                geciciDokuman.dokuman_adi = etDokumanAdi.text.toString()
+
 
 
                         referans.child(yeniOdevId!!)

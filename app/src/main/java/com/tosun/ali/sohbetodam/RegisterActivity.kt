@@ -61,7 +61,7 @@ class RegisterActivity : AppCompatActivity() {
                         // a.tosun.420@gmail.com ->> a.tosun.420
                         veriTabanınaEklenecekKullanici.kullanici_id = FirebaseAuth.getInstance().currentUser!!.uid
                         veriTabanınaEklenecekKullanici.profil_resim =""
-                        veriTabanınaEklenecekKullanici.seviye = (0 until 5).random().toString()
+                        veriTabanınaEklenecekKullanici.seviye = "10"
                         veriTabanınaEklenecekKullanici.telefon = (0 until 9).random().toString() + (0 until 9).random().toString()
 
 

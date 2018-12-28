@@ -14,7 +14,7 @@ class CalendarActivity : AppCompatActivity() {
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
 
-            var date = dayOfMonth.toString() + "/" + (month+1).toString() + "/" + year.toString()
+            var date = dayOfMonth.toString() + "/" + (month).toString() + "/" + year.toString()
 
             var intent = Intent(this,DersDetaylariOdevActivity::class.java)
             intent.putExtra("date",date)

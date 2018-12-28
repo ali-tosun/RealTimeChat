@@ -35,18 +35,18 @@ class DersDetaylariOdevActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ders_detaylari_odev)
 
-        var date = intent.getStringExtra("date")
+      /*  var date = intent.getStringExtra("date")
         if(date!= null){
             etTeslimTarihi.setText(date)
         }else{
             etTeslimTarihi.setText("belirlenmedi")
-        }
+        }*/
 
 
-        button2.setOnClickListener {
+       /* button2.setOnClickListener {
             var intent = Intent(this,CalendarActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
         btnSelectFile.setOnClickListener {
 
