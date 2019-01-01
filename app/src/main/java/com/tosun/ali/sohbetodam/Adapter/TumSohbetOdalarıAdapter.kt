@@ -24,8 +24,9 @@ import com.tosun.ali.sohbetodam.Fragment.YeniSohbetOdasiOlusturFragment
 import com.tosun.ali.sohbetodam.Model.Kullanici
 import com.tosun.ali.sohbetodam.Model.SohbetOdasi
 import kotlinx.android.synthetic.main.tek_satir_sohbet_odasi_layout.view.*
+import java.io.Serializable
 
-class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<SohbetOdasi>) : RecyclerView.Adapter<TumSohbetOdalarıAdapter.SohbetOdasiViewHolder>() {
+class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<SohbetOdasi>) : RecyclerView.Adapter<TumSohbetOdalarıAdapter.SohbetOdasiViewHolder>(){
 
     var parola = ""
     companion object {
@@ -34,7 +35,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
 
 
     var tumSohbetOdalari: ArrayList<SohbetOdasi>
-    var mySohbetOdasiActivity: Activity
+    var mySohbetOdasiActivity: Activity //67,185
 
     init {
         this.tumSohbetOdalari = tumSohbetOdalari
@@ -64,7 +65,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
 
         var tıklandıMı: Boolean = false
 
-        var myActivity = (mySohbetOdasiActivity as SohbetOdalariniGoruntuleActivity)
+        var myActivity = (mySohbetOdasiActivity as MainActivity)
 
 
         var btnKayitOl: Button = itemView.btnDersKayitOl
@@ -121,7 +122,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
                                         var intent = Intent(itemView.context, DersDetayEkleActivity::class.java)
 
                                         intent.putExtra("sohbetodasi_id", oAnkiSohbetOdasi.sohbetodasi_id)
-
+                                        Log.e("acsad",myActivity.toString())
                                         myActivity.startActivity(intent)
                                     } else {
                                         Toast.makeText(itemView.context, "şifre yanlış", Toast.LENGTH_SHORT).show()
@@ -182,7 +183,7 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
                     alertDialog.setPositiveButton("Evet", object : DialogInterface.OnClickListener {
                         override fun onClick(dialog: DialogInterface?, which: Int) {
 
-                            (mySohbetOdasiActivity as SohbetOdalariniGoruntuleActivity).sohbetOdasiSil(oAnkiSohbetOdasi.sohbetodasi_id)
+                            (mySohbetOdasiActivity as MainActivity).sohbetOdasiSil(oAnkiSohbetOdasi.sohbetodasi_id)
 
                         }
 

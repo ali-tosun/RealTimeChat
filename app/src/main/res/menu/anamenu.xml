@@ -16,6 +16,10 @@
         android:title="Sohbet Odası">
     </item>
 
+    <item android:id="@+id/fragmentDeneme"
+        android:title="Fragment">
+    </item>
+
 
 
 </menu>

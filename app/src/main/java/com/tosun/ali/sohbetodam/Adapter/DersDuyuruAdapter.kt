@@ -1,10 +1,13 @@
 package com.tosun.ali.sohbetodam.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.tosun.ali.sohbetodam.MainActivity
 import com.tosun.ali.sohbetodam.Model.Duyuru
 import com.tosun.ali.sohbetodam.R
 import kotlinx.android.synthetic.main.tek_satir_duyuru.view.*
@@ -43,6 +46,13 @@ class DersDuyuruAdapter(tumDuyurular:ArrayList<Duyuru>,context:Context):Recycler
         fun setData(position: Int) {
             tvDuyuruBaslik.text = tumDuyurular.get(position).duyuru_baslik
             tvDuyuruİcerik.text = tumDuyurular.get(position).duyuru_icerik
+
+            itemView.setOnClickListener {
+              /*  Toast.makeText(context, "asd", Toast.LENGTH_LONG).show()
+
+                var intent = Intent(context, MainActivity::class.java)
+                context.startActivity(intent)*/
+            }
 
         }
 

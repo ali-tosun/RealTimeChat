@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".DenemeActivity">
 
 
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayouts"
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
@@ -21,7 +21,7 @@
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewPagers"
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

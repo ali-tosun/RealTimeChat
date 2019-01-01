@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
@@ -48,7 +48,8 @@
         <activity android:name=".DersDetayEkleActivity" />
         <activity android:name=".DersDetaylariOdevActivity" />
         <activity android:name=".CalendarActivity" />
-        <activity android:name=".DersDetaylariDuyuruActivity"></activity>
+        <activity android:name=".DersDetaylariDuyuruActivity" />
+        <activity android:name=".DenemeActivity"></activity>
     </application>
 
 </manifest>

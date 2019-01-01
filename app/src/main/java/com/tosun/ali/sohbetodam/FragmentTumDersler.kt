@@ -1,49 +1,75 @@
 package com.tosun.ali.sohbetodam
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.tosun.ali.sohbetodam.Adapter.TumSohbetOdalarıAdapter
-import com.tosun.ali.sohbetodam.Fragment.YeniSohbetOdasiOlusturFragment
 import com.tosun.ali.sohbetodam.Model.SohbetMesaj
 import com.tosun.ali.sohbetodam.Model.SohbetOdasi
-import kotlinx.android.synthetic.main.activity_sohbet.*
+import kotlinx.android.synthetic.main.tumdersler_fragment.*
 
-class SohbetOdalariniGoruntuleActivity : AppCompatActivity() {
+class FragmentTumDersler:Fragment(){
 
     lateinit var tumSohbetOdalari: ArrayList<SohbetOdasi>
+    var v:View? = null
+    var myContext:Context?=null
+    var myActivity:MainActivity?=null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        v = inflater.inflate(R.layout.tumdersler_fragment,container,false)
+
+        val activity = activity as MainActivity
+        myActivity =activity.getMainActivity()
+        myContext = container!!.context
+
+        //myActivity = arguments!!.getSerializable("myActivity") as MainActivity
+        //Log.e("asdasd",myActivity.toString())
+
+        init()
+
+        return v
+
+
+
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sohbet)
+    }
+
+
+
+
+    fun sohbetOdasiSil(sohbetOdasiİd: String) {
+
+        var FirebaseDatabaseRef = FirebaseDatabase.getInstance().reference
+
+        FirebaseDatabaseRef.child("sohbet_odasi").child(sohbetOdasiİd).removeValue()
+
+        Toast.makeText(myContext, "Sohbet odasi silindi", Toast.LENGTH_SHORT).show()
+
         init()
 
-
     }
 
-    fun init() {
-        tumSohbetOdalariniGetir()
 
-        fabYeniSohbetOdasi.setOnClickListener {
+    private fun sohbetOdalariListele() {
+        var mySohbetOdasiAdapter = TumSohbetOdalarıAdapter(myActivity!!, tumSohbetOdalari)
+        rvTumSohbetler.adapter = mySohbetOdasiAdapter
+        rvTumSohbetler.layoutManager = LinearLayoutManager(myContext, LinearLayoutManager.VERTICAL, false)
 
-            var dialog = YeniSohbetOdasiOlusturFragment()
-            dialog.show(supportFragmentManager, "yenisohbetodasifragment")
-
-        }
-
-
-    }
-
-    public fun getMyActivity(): SohbetOdalariniGoruntuleActivity {
-
-        return this@SohbetOdalariniGoruntuleActivity
     }
 
     private fun tumSohbetOdalariniGetir() {
@@ -111,25 +137,20 @@ class SohbetOdalariniGoruntuleActivity : AppCompatActivity() {
         })
     }
 
-    private fun sohbetOdalariListele() {
-        var mySohbetOdasiAdapter = TumSohbetOdalarıAdapter(this@SohbetOdalariniGoruntuleActivity, tumSohbetOdalari)
-        rvSohbetOdalari.adapter = mySohbetOdasiAdapter
-        rvSohbetOdalari.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+    fun init() {
+        tumSohbetOdalariniGetir()
+
+     /*   fabYeniSohbetOdasi.setOnClickListener {
+
+            var dialog = YeniSohbetOdasiOlusturFragment()
+            dialog.show(fragmentManager, "yenisohbetodasifragment")
+
+        }*/
+
 
     }
 
-    fun sohbetOdasiSil(sohbetOdasiİd: String) {
 
-        var FirebaseDatabaseRef = FirebaseDatabase.getInstance().reference
-
-        FirebaseDatabaseRef.child("sohbet_odasi").child(sohbetOdasiİd).removeValue()
-
-        Toast.makeText(this@SohbetOdalariniGoruntuleActivity, "Sohbet odasi silindi", Toast.LENGTH_SHORT).show()
-
-        init()
-
-    }
 
 }
-
-
