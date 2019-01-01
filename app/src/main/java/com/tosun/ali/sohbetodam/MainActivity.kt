@@ -39,6 +39,7 @@ class MainActivity() : AppCompatActivity(), Serializable {
 
         adapter!!.AddFragment(FragmentTumDersler(), "Tüm Dersler")
         adapter!!.AddFragment(FragmentTumDuyurular(), "Duyurular")
+        adapter!!.AddFragment(FragmentDersProgrami(),"Ders Programi")
 
 
 
