@@ -47,7 +47,8 @@
         <activity android:name=".DersDetaylariOgrenciActivity" />
         <activity android:name=".DersDetayEkleActivity" />
         <activity android:name=".DersDetaylariOdevActivity" />
-        <activity android:name=".CalendarActivity"></activity>
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".DersDetaylariDuyuruActivity"></activity>
     </application>
 
 </manifest>

@@ -28,5 +28,19 @@ class DersDetayEkleActivity : AppCompatActivity() {
 
         }
 
+        btnDersSayfasinaGit.setOnClickListener {
+            var sohbetOdasiİd = intent.getStringExtra("sohbetodasi_id")
+            var intent = Intent(this,DersDetaylariOgrenciActivity::class.java)
+            intent.putExtra("sohbetodasi_id",sohbetOdasiİd)
+            startActivity(intent)
+        }
+
+        btnDuyuruEkle.setOnClickListener {
+            var sohbetOdasiİd = intent.getStringExtra("sohbetodasi_id")
+            var intent = Intent(this,DersDetaylariDuyuruActivity::class.java)
+            intent.putExtra("sohbetodasi_id",sohbetOdasiİd)
+            startActivity(intent)
+        }
+
     }
 }

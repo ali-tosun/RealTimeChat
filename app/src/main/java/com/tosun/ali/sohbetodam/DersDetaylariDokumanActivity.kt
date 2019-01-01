@@ -76,14 +76,6 @@ class DersDetaylariDokumanActivity : AppCompatActivity() {
 
 
 
-        btnFetcFile.setOnClickListener {
-            var sohbetOdasiİd = intent.getStringExtra("sohbetodasi_id")
-            var intent = Intent(this,DersDetaylariOgrenciActivity::class.java)
-            intent.putExtra("sohbetodasi_id",sohbetOdasiİd)
-            startActivity(intent)
-
-
-        }
 
 
 
@@ -91,20 +83,6 @@ class DersDetaylariDokumanActivity : AppCompatActivity() {
 
 
 
-        btnCanlıSohbet.setOnClickListener {
-
-            //sohbet odaları adapterden gelen veriyi , sohbetmesajları activity e taşınması
-
-            var sohbetOdasiİd = intent.getStringExtra("sohbetodasi_id")
-
-            var intent = Intent(this, SohmetMesajlariActivity::class.java)
-
-            intent.putExtra("sohbetodasi_id", sohbetOdasiİd)
-
-            startActivity(intent)
-
-
-        }
 
     }
 

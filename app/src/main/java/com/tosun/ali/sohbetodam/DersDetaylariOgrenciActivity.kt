@@ -1,5 +1,6 @@
 package com.tosun.ali.sohbetodam
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -28,6 +29,17 @@ class DersDetaylariOgrenciActivity : AppCompatActivity() {
 
         dokumanlarVeriKaynagiOlustur()
         odevlerVeriKaynagiOlustur()
+
+        btnCanlıSohbeteGit.setOnClickListener {
+
+            var sohbetOdasiİd = intent.getStringExtra("sohbetodasi_id")
+
+            var intent = Intent(this, SohmetMesajlariActivity::class.java)
+
+            intent.putExtra("sohbetodasi_id", sohbetOdasiİd)
+
+            startActivity(intent)
+        }
 
 
     }
