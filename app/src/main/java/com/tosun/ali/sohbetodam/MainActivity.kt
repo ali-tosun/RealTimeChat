@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
@@ -21,13 +22,14 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var myAuthStateListener: FirebaseAuth.AuthStateListener
 
-    lateinit var tumDuyurular:ArrayList<Duyuru>
+    lateinit var tumDuyurular: ArrayList<Duyuru>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initMyAuthStateListener()
         initFCM()
+
 
 
     }
@@ -38,29 +40,52 @@ class MainActivity : AppCompatActivity() {
         var reference = FirebaseDatabase.getInstance().reference
                 .child("kullanici")
                 .child(FirebaseAuth.getInstance().currentUser!!.uid)
-                .child("duyurular")
-                .addListenerForSingleValueEvent(object : ValueEventListener{
+                .child("katildigi_dersler")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onCancelled(p0: DatabaseError) {
 
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
 
-                        for (data in p0!!.children){
+                        for (data in p0!!.children) {
 
 
-                            var geciciDuyuru = Duyuru()
+                            var sohbetOdasiİd = data.key
 
-                            geciciDuyuru.sohbet_odasi_id = data.getValue(Duyuru::class.java)!!.sohbet_odasi_id
-                            geciciDuyuru.duyuru_icerik = data.getValue(Duyuru::class.java)!!.duyuru_icerik
-                            geciciDuyuru.duyuru_baslik = data.getValue(Duyuru::class.java)!!.duyuru_baslik
+                            var refSohbet = FirebaseDatabase.getInstance().reference
+                                    .child("sohbet_odasi")
+                                    .child(sohbetOdasiİd!!)
+                                    .child("duyurular")
+                                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                                        override fun onDataChange(p0: DataSnapshot) {
 
-                            tumDuyurular.add(geciciDuyuru)
+                                            for (data in p0!!.children) {
+
+                                                var geciciDuyuru = Duyuru()
+
+
+                                                geciciDuyuru.sohbet_odasi_id = data.getValue(Duyuru::class.java)!!.sohbet_odasi_id
+                                                geciciDuyuru.duyuru_icerik = data.getValue(Duyuru::class.java)!!.duyuru_icerik
+                                                geciciDuyuru.duyuru_baslik = data.getValue(Duyuru::class.java)!!.duyuru_baslik
+                                                Log.e("ocaks", geciciDuyuru.toString())
+                                                tumDuyurular.add(geciciDuyuru)
+
+                                                duyuruAdapterOlustur()
+
+
+                                            }
+
+                                        }
+
+                                        override fun onCancelled(p0: DatabaseError) {
+                                        }
+
+                                    })
 
 
                         }
 
-                        duyuruAdapterOlustur()
 
                     }
 
@@ -71,7 +96,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun duyuruAdapterOlustur() {
 
-        var odevAdapter=DersDuyuruAdapter(tumDuyurular,this)
+        //compareto metodu ile zamana göre sıralancak
+        var odevAdapter = DersDuyuruAdapter(tumDuyurular, this)
+        Log.e("ocaks1", tumDuyurular.toString())
         rvDuyurular.adapter = odevAdapter
         rvDuyurular.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
     }
@@ -84,8 +111,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-    private fun tokeniVeriTabanınaKaydet(token:String?) {
+    private fun tokeniVeriTabanınaKaydet(token: String?) {
 
         FirebaseDatabase.getInstance().reference
                 .child("kullanici")

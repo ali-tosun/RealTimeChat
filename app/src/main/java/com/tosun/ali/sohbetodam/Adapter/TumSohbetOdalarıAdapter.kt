@@ -294,7 +294,11 @@ class TumSohbetOdalarıAdapter(mActivity: Activity, tumSohbetOdalari: ArrayList<
 
 
                                 if (!kullaniciİd.equals("")) {
-                                    Picasso.get().load(profilResim).into(imgSohbetOdasiOlusturanProfilResmi)
+                                    if(!profilResim.isNullOrEmpty()){
+                                        //bug olabilir.
+                                        Picasso.get().load(profilResim).into(imgSohbetOdasiOlusturanProfilResmi)
+                                    }
+
                                     tvSohbetOdasiOlusturanKisiAdi.setText(kullaniciAdi)
                                 }
 
