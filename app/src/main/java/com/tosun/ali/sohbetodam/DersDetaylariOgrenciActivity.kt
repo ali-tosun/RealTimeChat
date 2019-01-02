@@ -17,34 +17,75 @@ import com.tosun.ali.sohbetodam.Model.Odev
 import kotlinx.android.synthetic.main.activity_ders_detaylari_ogrenci.*
 
 class DersDetaylariOgrenciActivity : AppCompatActivity() {
-
+/*
     lateinit var tumDokumanlar: ArrayList<Dokuman>
     lateinit var tumOdevler: ArrayList<Odev>
     var dokumanIdSet: HashSet<String>? = null
-    var myAdapter: DersDetayOgrenciAdapter? = null
+    var myAdapter: DersDetayOgrenciAdapter? = null*/
+
+    var adapter: ViewPagerAdapter? = null
+
+    var mySohbetOdasiİd:String?=null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ders_detaylari_ogrenci)
 
-        dokumanlarVeriKaynagiOlustur()
-        odevlerVeriKaynagiOlustur()
 
-        btnCanlıSohbeteGit.setOnClickListener {
 
-            var sohbetOdasiİd = intent.getStringExtra("sohbetodasi_id")
+        adapter = ViewPagerAdapter(supportFragmentManager)
+
+        mySohbetOdasiİd = intent.getStringExtra("sohbetodasi_id")
+
+
+        adapter!!.AddFragment(FragmentTumOdevler(), "Ödevler")
+        adapter!!.AddFragment(FragmentTumDersDokumanlari(), "Dökümanlar")
+        adapter!!.AddFragment(FragmentCanliSohbet(),"Canlı Sohbet")
+
+
+
+
+        viewPagerOgrenci.adapter = adapter
+        tabLayoutOgrenci.setupWithViewPager(viewPagerOgrenci)
+
+
+        tabLayoutOgrenci.getTabAt(0)!!.setIcon(R.drawable.ic_assignment_ind_black_24dp)
+        tabLayoutOgrenci.getTabAt(1)!!.setIcon(R.drawable.ic_content_cut_black_24dp)
+
+
+        /*btnCanlıSohbeteGit.setOnClickListener {
+
 
             var intent = Intent(this, SohmetMesajlariActivity::class.java)
 
             intent.putExtra("sohbetodasi_id", sohbetOdasiİd)
 
             startActivity(intent)
-        }
+        }*/
 
 
     }
 
-    private fun odevlerVeriKaynagiOlustur() {
+    public fun getSohbetOdasiİd():String{
+
+        return mySohbetOdasiİd!!
+    }
+
+    public fun getActivity(): DersDetaylariOgrenciActivity {
+        return this@DersDetaylariOgrenciActivity
+    }
+
+    public fun canliSohbeteGit(){
+        var intent = Intent(this, SohmetMesajlariActivity::class.java)
+
+        intent.putExtra("sohbetodasi_id", getSohbetOdasiİd())
+
+        startActivity(intent)
+    }
+
+    /* private fun odevlerVeriKaynagiOlustur() {
 
 
         tumOdevler = ArrayList<Odev>()
@@ -91,9 +132,9 @@ class DersDetaylariOgrenciActivity : AppCompatActivity() {
 
 
 
-    }
+    }*/
 
-    private fun odevAdapterOlustur() {
+    /*private fun odevAdapterOlustur() {
 
 
         var odevAdapter=DersOdevAdapter(tumOdevler,this)
@@ -151,8 +192,8 @@ class DersDetaylariOgrenciActivity : AppCompatActivity() {
 
                     }
 
-                })
-
+                })*/
+            //}
 
     }
-}
+

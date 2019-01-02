@@ -12,13 +12,7 @@
     </item>
 
 
-    <item android:id="@+id/menuSohbet"
-        android:title="Sohbet Odası">
-    </item>
 
-    <item android:id="@+id/fragmentDeneme"
-        android:title="Fragment">
-    </item>
 
 
 

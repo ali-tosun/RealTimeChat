@@ -215,11 +215,11 @@ class MainActivity() : AppCompatActivity(), Serializable {
                 startActivity(intent)
 
             }
-            R.id.menuSohbet -> {
+          /*  R.id.menuSohbet -> {
                 var intent = Intent(this, SohbetOdalariniGoruntuleActivity::class.java)
                 startActivity(intent)
 
-            }
+            }*/
 
             /*    R.id.fragmentDeneme -> {
                     var intent = Intent(this, DenemeActivity::class.java)

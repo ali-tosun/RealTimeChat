@@ -14,12 +14,30 @@ class FragmentDersProgrami: Fragment() {
 
         var view = inflater.inflate(R.layout.dersprogrami_fragment,container,false)
 
-        var pdfView = view.pdfView
-        pdfView.fromAsset("sample.pdf").load()
+        view.radioGrup.setOnCheckedChangeListener { group, checkedId ->
+
+            when(checkedId){
+
+                R.id.rdBtnNormal -> {
+                    var pdfView = view.pdfView
+                    pdfView.fromAsset("sample2.pdf").load()
+                }
+
+                R.id.rdBtnİkinci ->{
+                    var pdfView = view.pdfView
+                    pdfView.fromAsset("sample.pdf").load()
+                }
+
+            }
+
+        }
+
+
 
 
         return view
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
