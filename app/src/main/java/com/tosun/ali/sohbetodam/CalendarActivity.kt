@@ -19,6 +19,7 @@ class CalendarActivity : AppCompatActivity() {
             var intent = Intent(this,DersDetaylariOdevActivity::class.java)
             intent.putExtra("date",date)
             startActivity(intent)
+            //deneme
         }
 
     }
