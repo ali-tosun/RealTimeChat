@@ -20,12 +20,12 @@ class FragmentDersProgrami: Fragment() {
 
                 R.id.rdBtnNormal -> {
                     var pdfView = view.pdfView
-                    pdfView.fromAsset("sample2.pdf").load()
+                    pdfView.fromAsset("namkders.pdf").load()
                 }
 
                 R.id.rdBtnİkinci ->{
                     var pdfView = view.pdfView
-                    pdfView.fromAsset("sample.pdf").load()
+                    pdfView.fromAsset("namkders.pdf").load()
                 }
 
             }
